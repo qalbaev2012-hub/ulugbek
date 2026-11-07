@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Qalbaev Ulugbek — IT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1226; --surface:#181c3a; --line:#2a3066; --text:#eceeff; --muted:#a2a8d6;
+  --accent:#7a86ff; --warm:#ffb347; --on-accent:#0f1226; --node:122,134,255;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#f1f2fb; --surface:#ffffff; --line:#d3d6f0; --text:#14183a; --muted:#585e8f;
+    --accent:#3446f0; --warm:#c46a00; --on-accent:#ffffff; --node:52,70,240;
+  }
+}
+:root[data-theme="light"]{--bg:#f1f2fb;--surface:#fff;--line:#d3d6f0;--text:#14183a;--muted:#585e8f;--accent:#3446f0;--warm:#c46a00;--on-accent:#fff;--node:52,70,240}
+html{scroll-padding-top:env(safe-area-inset-top,0px);color-scheme:light dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.6 Manrope,system-ui,sans-serif;overflow-x:hidden}
+canvas#net{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+main{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding:clamp(28px,6vw,72px) 22px 56px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--warm);outline-offset:3px;border-radius:6px}
+
+.hero{min-height:62vh;display:flex;flex-direction:column;justify-content:center}
+.status{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-weight:500;margin:0 0 22px}
+.status i{width:10px;height:10px;border-radius:50%;background:var(--warm);box-shadow:0 0 0 0 var(--warm);animation:pulse 2.4s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 12px transparent}100%{box-shadow:0 0 0 0 transparent}}
+h1{font:800 clamp(46px,10.5vw,118px)/.96 Sora,sans-serif;letter-spacing:-.035em;margin:0}
+h1 span{display:block;overflow:hidden;padding-bottom:.06em}
+h1 span b{display:block;font-weight:inherit;transform:translateY(105%);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+h1 span:nth-child(2) b{animation-delay:.12s;color:var(--accent)}
+@keyframes rise{to{transform:none}}
+.role{font:500 clamp(19px,2.6vw,26px)/1.3 Sora,sans-serif;margin:26px 0 8px}
+.bio{max-width:56ch;color:var(--muted);margin:0}
+
+.grid{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;margin-top:48px;align-items:start}
+h2{font:700 22px/1.2 Sora,sans-serif;margin:0 0 18px}
+.group{margin-bottom:22px}
+.group h3{font:600 15px/1.3 Manrope,sans-serif;color:var(--muted);margin:0 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chips li{padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-weight:500;font-size:15px;transition:border-color .2s,transform .2s}
+.chips li:hover{border-color:var(--accent);transform:translateY(-2px)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:26px;position:sticky;top:24px}
+.row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.row:last-of-type{border-bottom:0}
+.row svg{flex:none;width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.row a{flex:1;min-width:0;overflow-wrap:anywhere;text-decoration:none;font-weight:600}
+.row a:hover{text-decoration:underline}
+.copy{flex:none;font:600 13px Manrope,sans-serif;background:transparent;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:7px 12px;cursor:pointer;transition:background .2s,color .2s}
+.copy:hover{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.cta{display:block;text-align:center;margin-top:18px;padding:14px;border-radius:14px;background:var(--accent);color:var(--on-accent);font-weight:700;text-decoration:none}
+.cta:hover{filter:brightness(1.08)}
+footer{margin-top:56px;color:var(--muted);font-size:14px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}.card{position:static}}
+@media (prefers-reduced-motion:reduce){h1 span b{animation:none;transform:none}.status i{animation:none}.chips li{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="net" aria-hidden="true"></canvas>
+<main>
+  <section class="hero">
+    <p class="status"><i></i>Yangi loyihalar uchun ochiqman</p>
+    <h1><span><b>Qalbaev</b></span><span><b>Ulugbek</b></span></h1>
+    <p class="role">IT</p>
+    <p class="bio">Ma’lumotlardan ishlaydigan aqlli tizimlar quraman: modelni oʻqitishdan tortib, uni real mahsulotga joylashgacha.</p>
+  </section>
+
+  <div class="grid">
+    <section aria-labelledby="sk">
+      <h2 id="sk">Koʻnikmalar</h2>
+      <div class="group"><h3>Dasturlash</h3>
+        <ul class="chips"><li>Python</li><li>SQL</li><li>Bash</li><li>Git</li></ul></div>
+      <div class="group"><h3>Mashinali oʻqitish</h3>
+        <ul class="chips"><li>scikit-learn</li><li>XGBoost</li><li>NumPy</li><li>Pandas</li><li>Feature engineering</li></ul></div>
+      <div class="group"><h3>Chuqur oʻqitish</h3>
+        <ul class="chips"><li>PyTorch</li><li>TensorFlow</li><li>CNN</li><li>Transformers</li></ul></div>
+      <div class="group"><h3>Kompyuter koʻrish va NLP</h3>
+        <ul class="chips"><li>OpenCV</li><li>Obyektni aniqlash</li><li>Hugging Face</li><li>Matn tasnifi</li></ul></div>
+      <div class="group"><h3>LLM va generativ AI</h3>
+        <ul class="chips"><li>Prompt engineering</li><li>RAG</li><li>LangChain</li><li>Fine-tuning</li><li>Vektor bazalar</li></ul></div>
+      <div class="group"><h3>Deploy va MLOps</h3>
+        <ul class="chips"><li>FastAPI</li><li>Docker</li><li>Linux</li><li>MLflow</li><li>CI/CD</li></ul></div>
+    </section>
+
+    <aside class="card" aria-labelledby="ct">
+      <h2 id="ct">Bogʻlanish</h2>
+      <div class="row">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
+        <a href="mailto:qalbaev2012@gmail.com">qalbaev2012@gmail.com</a>
+        <button class="copy" data-copy="qalbaev2012@gmail.com">Nusxalash</button>
+      </div>
+      <div class="row">
+        <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+        <a href="tel:+998970961215">+998 97 096 12 15</a>
+        <button class="copy" data-copy="+998970961215">Nusxalash</button>
+      </div>
+      <div class="row">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg>
+        <a href="https://instagram.com/qalbaevvv" target="_blank" rel="noopener">@qalbaevvv</a>
+        <button class="copy" data-copy="@qalbaevvv">Nusxalash</button>
+      </div>
+      <a class="cta" href="mailto:qalbaev2012@gmail.com?subject=Hamkorlik%20taklifi">Xat yozish</a>
+    </aside>
+  </div>
+  <footer>© 2026 Qalbaev Ulugbek</footer>
+</main>
+
+<script>
+// Copy buttons
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=b.dataset.copy,old=b.textContent;
+    function done(){b.textContent='Nusxalandi';setTimeout(function(){b.textContent=old},1600)}
+    try{navigator.clipboard.writeText(t).then(done,done)}catch(e){done()}
+  });
+});
+
+// Neural network background
+(function(){
+  var c=document.getElementById('net'),x=c.getContext('2d'),W,H,N=[],m={x:-999,y:-999},
+  still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function rgb(){return getComputedStyle(document.documentElement).getPropertyValue('--node').trim()}
+  function size(){
+    var d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;
+    c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
+    var n=Math.round(Math.min(90,W*H/16000));N=[];
+    for(var i=0;i<n;i++)N.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35});
+  }
+  function frame(){
+    var col=rgb();x.clearRect(0,0,W,H);
+    for(var i=0;i<N.length;i++){
+      var a=N[i];
+      if(!still){
+        a.x+=a.vx;a.y+=a.vy;
+        if(a.x<0||a.x>W)a.vx*=-1;if(a.y<0||a.y>H)a.vy*=-1;
+        var dx=m.x-a.x,dy=m.y-a.y,dm=Math.hypot(dx,dy);
+        if(dm<160&&dm>1){a.x+=dx/dm*.6;a.y+=dy/dm*.6}
+      }
+      x.beginPath();x.arc(a.x,a.y,2,0,6.283);x.fillStyle='rgba('+col+',.7)';x.fill();
+      for(var j=i+1;j<N.length;j++){
+        var b=N[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<130){x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);
+          x.strokeStyle='rgba('+col+','+(.28*(1-d/130)).toFixed(3)+')';x.lineWidth=1;x.stroke()}
+      }
+    }
+    if(!still)requestAnimationFrame(frame);
+  }
+  addEventListener('pointermove',function(e){m.x=e.clientX;m.y=e.clientY});
+  addEventListener('pointerleave',function(){m.x=m.y=-999});
+  addEventListener('resize',function(){size();if(still)frame()});
+  size();frame();
+})();
+</script>
+</body>
+</html>
